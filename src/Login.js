@@ -33,41 +33,38 @@ export default class Login extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    alert("email: " + this.state.email + "\npass: " + this.state.password);
+    // alert("email: " + this.state.email + "\npass: " + this.state.password);
+    var payload = {
+      email: this.state.email,
+      password: this.state.password
+    };
+
+    var data = new FormData();
+    data.append("json", JSON.stringify(payload));
+
+    fetch("https://httpbin.org/post",
+      {
+        method: "POST",
+        body: data
+      })
+      .then(function (res) {
+        console.log(res.status);
+        if(res.status == 200){
+          window.location = "/Homepage"
+        }
+        return res.json();
+      })
+      .then(function (dat) { console.log((dat)) })
   }
 
   render() {
     return (
       <div className="Login">
-        {/* <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="email" bsSize="large">
-            <FormLabel>Email</FormLabel>
-            <FormControl
-              autoFocus
-              type="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </FormGroup>
-          <FormGroup controlId="password" bsSize="large">
-            <FormLabel>Password</FormLabel>
-            <FormControl
-              value={this.state.password}
-              onChange={this.handleChange}
-              type="password"
-            />
-          </FormGroup>
-          <Button
-            block
-            bsSize="large"
-            disabled={!this.validateForm()}
-            type="submit"
-          >
-            Login
-          </Button>
-        </form> */}
         <Form onSubmit={this.handleSubmit}>
-          <img className="logo" src={"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K"} />
+          <div class="logo_container">
+            <img className="logo" src={"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K"} />
+            <a href="/Signup" title="Signup" class="logo_signup"></a>
+          </div>
           <Form.Group controlId="email" bsSize="large">
             <Form.Label>Email</Form.Label>
             <Form.Control
@@ -84,13 +81,13 @@ export default class Login extends Component {
               onChange={this.handleChange}
               type="password"
               placeholder="Password" />
+            <a href="#" style={{ color: "white" }}>Forgot password</a>
           </Form.Group>
           <Button
             block
             bsSize="large"
             disabled={!this.validateForm()}
-            type="submit"
-          >
+            type="submit">
             Login
           </Button>
         </Form>
