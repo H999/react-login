@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl, FormLabel, Form, Row, Col } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import "./Login.css";
@@ -31,30 +31,31 @@ export default class Login extends Component {
     });
   }
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
     // alert("email: " + this.state.email + "\npass: " + this.state.password);
+
     var payload = {
       email: this.state.email,
       password: this.state.password
     };
 
     var data = new FormData();
-    data.append("json", JSON.stringify(payload));
+    data.append("email", this.state.email);
+    data.append("password", this.state.password);
+    const data1 = new URLSearchParams(data);
 
-    fetch("https://httpbin.org/post",
+    await fetch("https://nameless-spire-31903.herokuapp.com/api/auth/login",
       {
         method: "POST",
-        body: data
-      })
+        body: data1
+      }
+    )
       .then(function (res) {
         console.log(res.status);
-        if(res.status == 200){
-          window.location = "/Homepage"
-        }
         return res.json();
       })
-      .then(function (dat) { console.log((dat)) })
+      .then(function (data) { console.log((data)) })
   }
 
   render() {

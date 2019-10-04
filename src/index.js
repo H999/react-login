@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 import Login from './Login';
+import Sigup from './Sigup';
 // import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 const routing = (
@@ -13,6 +14,7 @@ const routing = (
             <Route exact path="/" component={App} />
             <Route exact path="/Login" component={Login} />
             <Route exact path="/Homepage" component={App} />
+            <Route exact path="/Sigup" component={Sigup} />
         </div>
     </Router>
 )
